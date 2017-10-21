@@ -17,7 +17,7 @@ $dbOptions = [
     'db_lifetime_col'   => 'sess_lifetime',
 ];
 
-$storage = new NativeSessionStorage([], new PdoSessionHandler($pdo));
+$storage = new NativeSessionStorage([], new PdoSessionHandler($pdo, $dbOptions));
 $session = new Session($storage);
 
 $session->set('foo', 'bar');
