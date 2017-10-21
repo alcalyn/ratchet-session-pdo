@@ -1,0 +1,45 @@
+version: '2'
+
+services:
+    rest-api:
+        image: nginx
+        ports:
+            - 8480:80
+        volumes:
+            - .:/var/www/html/
+            - ./docker/rest-api/nginx.conf:/etc/nginx/conf.d/default.conf
+        links:
+            - php-fpm
+
+    websocket-server:
+        container_name: alcalyn-ws
+        build: docker/php-fpm
+        command: php bin/websocket-server
+        ports:
+            - 8482:8482
+        volumes:
+            - .:/var/www/html/
+
+    php-fpm:
+        container_name: alcalyn-php
+        build: docker/php-fpm
+        volumes:
+            - .:/var/www/html/
+        links:
+            - database
+            - websocket-server
+
+    database:
+        container_name: alcalyn-database
+        image: mariadb
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            PMA_HOST: database
+        ports:
+            - 8481:80
+

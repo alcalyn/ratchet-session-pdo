@@ -1,0 +1,14 @@
+{
+    "name": "alcalyn/ratchet-session-pdo",
+    "description": "Testing Racthet sessions sharing between webserver and websocket with PDO",
+    "license": "MIT",
+    "type": "project",
+    "require": {
+        "cboden/ratchet": "0.4.x"
+    },
+    "autoload": {
+        "psr-4": {
+            "": ["src/", "app/"]
+        }
+    }
+}
